@@ -18,7 +18,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField 'String', 'API_BASE_URL', "\"https://data.taipei/api/v1/dataset/\""
+            buildConfigField 'boolean', "ISDEBUG", "true"
+        }
         release {
+            buildConfigField 'String', 'API_BASE_URL', "\"https://data.taipei/api/v1/dataset/\""
+            buildConfigField 'boolean', "ISDEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -53,6 +59,13 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+
+    //Retrofit and GSON
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    // 標準轉換器，去掉Retrofit以Multipart上傳參數時，String參數會多一對雙引號
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
