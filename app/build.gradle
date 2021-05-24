@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -66,6 +67,14 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
     // 標準轉換器，去掉Retrofit以Multipart上傳參數時，String參數會多一對雙引號
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:annotations:4.11.0'
+    // Glide集成OkHttp時需要使用的library
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+    // Glide需要處理註解時所依賴的library，用於處理註解並生成java類
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

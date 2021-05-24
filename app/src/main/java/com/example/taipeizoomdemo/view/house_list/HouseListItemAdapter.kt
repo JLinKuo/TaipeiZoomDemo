@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.taipeizoomdemo.R
 import com.example.taipeizoomdemo.databinding.ViewListHouseItemBinding
 import com.example.taipeizoomdemo.view.pojo.HousePojo
@@ -21,6 +22,7 @@ class HouseListItemAdapter: RecyclerView.Adapter<HouseListItemAdapter.ViewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Glide.with(context).load(listHouses[position].picUrl).into(holder.binding.image)
         holder.binding.title.text = listHouses[position].name
         holder.binding.description.text = listHouses[position].info
         holder.binding.memo.text = memoMessage(listHouses[position].memo)
