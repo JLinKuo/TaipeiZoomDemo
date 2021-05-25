@@ -25,7 +25,9 @@ class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBind
 
     private val listAdapter by lazy { HouseListItemAdapter( object: HouseListItemAdapter.SelectItemListener {
         override fun onItemSelected(housePojo: HousePojo) {
-            Toast.makeText(activity, "${housePojo.name}", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(
+                HouseListFragmentDirections.actionHouseListFragmentToHouseInfoFragment(housePojo)
+            )
         }
     }) }
     private var totalItems = 0

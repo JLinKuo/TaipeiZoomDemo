@@ -9,5 +9,22 @@
         android:name="com.example.taipeizoomdemo.view.house_list.HouseListFragment"
         android:label="fragment_house_list"
         tools:layout="@layout/fragment_house_list"
-        />
+        >
+        <action
+            android:id="@+id/action_houseListFragment_to_houseInfoFragment"
+            app:destination="@id/houseInfoFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/houseInfoFragment"
+        android:name="com.example.taipeizoomdemo.view.house_info.HouseInfoFragment"
+        android:label="fragment_house_info"
+        tools:layout="@layout/fragment_house_info"
+        >
+        <argument
+            android:name="HousePojo"
+            app:argType="com.example.taipeizoomdemo.view.pojo.HousePojo"
+            />
+    </fragment>
 </navigation>
