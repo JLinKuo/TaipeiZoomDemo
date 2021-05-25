@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taipeizoomdemo.databinding.FragmentHouseListBinding
 import com.example.taipeizoomdemo.model.network.Resource
 import com.example.taipeizoomdemo.model.network.bean.HouseBean
@@ -22,6 +23,8 @@ import com.example.taipeizoomdemo.view.pojo.HousePojo
 class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBinding, HouseListRepository>() {
 
     private val listAdapter by lazy { HouseListItemAdapter() }
+    private var totalItems = 0
+    private var currItemAmounts = 0      // 一開始所累積的Item數量是0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,15 +43,35 @@ class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBind
     }
 
     private fun setRecyclerView() {
-        binding.recyclerview.layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
+        binding.recyclerview.layoutManager = layoutManager
         binding.recyclerview.adapter = listAdapter
         binding.recyclerview.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
+//        binding.recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+//
+//            private var lastVisibleItemPosition = 0
+//
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//                if(newState == RecyclerView.SCROLL_STATE_IDLE &&
+//                        lastVisibleItemPosition + 1 == listAdapter.itemCount && currItemAmounts < totalItems) {
+//                    getHouseListData()
+//                }
+//            }
+//
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+//            }
+//        })
     }
 
     private fun setObserver() {
         viewModel.getZoomHouseListResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is Resource.Success -> {
+                    totalItems = it.value.result.limit
+                    currItemAmounts += it.value.result.results.size
                     updateHouseListData(it.value.result.results)
                     activity.dismissProgressBar()
                 }
