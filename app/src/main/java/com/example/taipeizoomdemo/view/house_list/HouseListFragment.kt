@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.taipeizoomdemo.databinding.FragmentHouseListBinding
 import com.example.taipeizoomdemo.model.network.Resource
 import com.example.taipeizoomdemo.model.network.bean.HouseBean
@@ -22,7 +23,11 @@ import com.example.taipeizoomdemo.view.pojo.HousePojo
  */
 class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBinding, HouseListRepository>() {
 
-    private val listAdapter by lazy { HouseListItemAdapter() }
+    private val listAdapter by lazy { HouseListItemAdapter( object: HouseListItemAdapter.SelectItemListener {
+        override fun onItemSelected(housePojo: HousePojo) {
+            Toast.makeText(activity, "${housePojo.name}", Toast.LENGTH_SHORT).show()
+        }
+    }) }
     private var totalItems = 0
     private var currItemAmounts = 0      // 一開始所累積的Item數量是0
 

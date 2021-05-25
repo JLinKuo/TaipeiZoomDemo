@@ -9,7 +9,9 @@ import com.example.taipeizoomdemo.R
 import com.example.taipeizoomdemo.databinding.ViewListHouseItemBinding
 import com.example.taipeizoomdemo.view.pojo.HousePojo
 
-class HouseListItemAdapter: RecyclerView.Adapter<HouseListItemAdapter.ViewHolder>() {
+class HouseListItemAdapter(
+    private val listener: SelectItemListener
+) : RecyclerView.Adapter<HouseListItemAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     private val listHouses by lazy { ArrayList<HousePojo>() }
@@ -26,6 +28,10 @@ class HouseListItemAdapter: RecyclerView.Adapter<HouseListItemAdapter.ViewHolder
         holder.binding.title.text = listHouses[position].name
         holder.binding.description.text = listHouses[position].info
         holder.binding.memo.text = memoMessage(listHouses[position].memo)
+
+        holder.itemView.setOnClickListener {
+            listener.onItemSelected(listHouses[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount() = listHouses.size
@@ -48,4 +54,8 @@ class HouseListItemAdapter: RecyclerView.Adapter<HouseListItemAdapter.ViewHolder
     }
 
     inner class ViewHolder(val binding: ViewListHouseItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    interface SelectItemListener {
+        fun onItemSelected(housePojo: HousePojo)
+    }
 }
