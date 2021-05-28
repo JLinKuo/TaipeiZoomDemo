@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import com.example.taipeizoomdemo.model.network.bean.PlantBean
 import com.example.taipeizoomdemo.model.repository.HouseInfoRepository
 import com.example.taipeizoomdemo.view.base.BaseFragment
 import com.example.taipeizoomdemo.view.base.handleApiError
-import com.example.taipeizoomdemo.view.pojo.HousePojo
 import com.example.taipeizoomdemo.view.pojo.PlantPojo
 import com.google.android.material.appbar.AppBarLayout
 
@@ -41,6 +39,7 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
 
         getHouseListData()
         setView()
+        setListener()
         setObserver()
     }
 
@@ -49,13 +48,33 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
     }
 
     private fun setView() {
+        setTitle()
+        Glide.with(activity).load(housePojo.picUrl).into(binding.image)
         setRecyclerView()
+    }
+
+    private fun setTitle() {
+        binding.collapsingLayout.title = housePojo.name
+        binding.collapsingLayout.setCollapsedTitleTextColor(ContextCompat.getColor(activity, R.color.gray_1))
+        binding.collapsingLayout.setCollapsedTitleTypeface(Typeface.defaultFromStyle(Typeface.BOLD))
+        binding.collapsingLayout.setExpandedTitleColor(Color.WHITE)
     }
 
     private fun setRecyclerView() {
         binding.recyclerview.layoutManager = LinearLayoutManager(activity)
         binding.recyclerview.adapter = listAdapter
         binding.recyclerview.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+    }
+
+    private fun setListener() {
+        binding.appBarLayout.addOnOffsetChangedListener(
+                AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val isExpanded = (-1 * verticalOffset <= (appBarLayout.totalScrollRange) / 1.5)
+                binding.back.setImageDrawable(ContextCompat.getDrawable(activity,
+                    if(isExpanded) R.drawable.ic_back_white else R.drawable.ic_back_black)
+                )
+            }
+        )
     }
 
     private fun setObserver() {
