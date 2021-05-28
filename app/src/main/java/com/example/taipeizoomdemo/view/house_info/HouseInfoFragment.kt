@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.taipeizoomdemo.databinding.FragmentHouseInfoBinding
+import com.example.taipeizoomdemo.model.network.Resource
 import com.example.taipeizoomdemo.model.repository.HouseInfoRepository
 import com.example.taipeizoomdemo.view.base.BaseFragment
+import com.example.taipeizoomdemo.view.base.handleApiError
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +24,28 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("JLin", "name: ${housePojo.name}")
+        getHouseListData()
+        setObserver()
+    }
+
+    private fun getHouseListData() {
+        viewModel.getZoomPlantList()
+    }
+
+    private fun setObserver() {
+        viewModel.getZoomPlantListResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is Resource.Success -> {
+                    Log.d("JLin", "size: ${it.value.result.results.size}")
+
+                    activity.dismissProgressBar()
+                }
+
+                is Resource.Failure -> handleApiError(it)
+
+                is Resource.Loading -> activity.showProgressBar(true)
+            }
+        }
     }
 
     override fun getViewModel() = HouseInfoViewModel::class.java
