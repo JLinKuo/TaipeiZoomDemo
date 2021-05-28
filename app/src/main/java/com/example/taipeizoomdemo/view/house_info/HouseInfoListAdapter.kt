@@ -14,7 +14,8 @@ private const val VIEW_HOLDER_HOUSE_INFO_TYPE = 0
 private const val VIEW_HOLDER_PLANT_ITEM_TYPE = 1
 
 class HouseInfoListAdapter(
-    private val housePojo: HousePojo
+        private val housePojo: HousePojo,
+        private val listener: ItemClickListener
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var context: Context
@@ -46,6 +47,9 @@ class HouseInfoListAdapter(
                     this.binding.houseInfo.text = housePojo.info
                     this.binding.houseCategory.text = housePojo.category
                     this.binding.houseMemo.text = housePojo.memo
+                    this.binding.houseWebUrl.setOnClickListener {
+                        listener.onWebLinkClicked(housePojo.webUrl)
+                    }
                 }
             }
 
@@ -54,6 +58,10 @@ class HouseInfoListAdapter(
                     this.binding.name.text = listPlants[position - 1].nameCh
                     this.binding.alias.text = listPlants[position - 1].nameAlias
                     Glide.with(context).load(listPlants[position - 1].picUrl).into(this.binding.image)
+
+                    this.itemView.setOnClickListener {
+                        listener.onPlantSelected(listPlants[holder.adapterPosition - 1])
+                    }
                 }
             }
         }
@@ -76,4 +84,9 @@ class HouseInfoListAdapter(
     class HouseInfoViewHolder(val binding: ViewListHouseInfoBinding): RecyclerView.ViewHolder(binding.root)
 
     class PlantItemViewHolder(val binding: ViewListPlantItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    interface ItemClickListener {
+        fun onWebLinkClicked(webUrl: String)
+        fun onPlantSelected(plant: PlantPojo)
+    }
 }

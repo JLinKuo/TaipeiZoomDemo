@@ -26,5 +26,22 @@
             android:name="HousePojo"
             app:argType="com.example.taipeizoomdemo.view.pojo.HousePojo"
             />
+        <action
+            android:id="@+id/action_houseInfoFragment_to_plantInfoFragment"
+            app:destination="@id/plantInfoFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/plantInfoFragment"
+        android:name="com.example.taipeizoomdemo.view.plant_info.PlantInfoFragment"
+        android:label="fragment_plant_info"
+        tools:layout="@layout/fragment_plant_info"
+        >
+        <argument
+            android:name="plantPojo"
+            app:argType="com.example.taipeizoomdemo.view.pojo.PlantPojo"
+            />
+
     </fragment>
 </navigation>

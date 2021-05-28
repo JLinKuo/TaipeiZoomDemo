@@ -1,13 +1,16 @@
 package com.example.taipeizoomdemo.view.house_info
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,12 +28,15 @@ import com.google.android.material.appbar.AppBarLayout
 /**
  * A simple [Fragment] subclass.
  */
-class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBinding, HouseInfoRepository>() {
+class HouseInfoFragment :
+        BaseFragment<HouseInfoViewModel, FragmentHouseInfoBinding, HouseInfoRepository>(),
+        HouseInfoListAdapter.ItemClickListener
+{
 
     private val args: HouseInfoFragmentArgs by navArgs()
     private val housePojo by lazy { args.HousePojo }
 
-    private val listAdapter by lazy { HouseInfoListAdapter(housePojo) }
+    private val listAdapter by lazy { HouseInfoListAdapter(housePojo, this) }
     private var totalItems = 0
     private var currItemAmounts = 0      // 一開始所累積的Item數量是0
 
@@ -41,6 +47,17 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
         setView()
         setListener()
         setObserver()
+    }
+
+    // HouseInfoListAdapter.ItemClickListener
+    override fun onWebLinkClicked(webUrl: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(webUrl)))
+    }
+
+    override fun onPlantSelected(plant: PlantPojo) {
+        findNavController().navigate(
+            HouseInfoFragmentDirections.actionHouseInfoFragmentToPlantInfoFragment(plant)
+        )
     }
 
     private fun getHouseListData() {
@@ -67,6 +84,10 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
     }
 
     private fun setListener() {
+        binding.back.setOnClickListener {
+            closeThePage()
+        }
+
         binding.appBarLayout.addOnOffsetChangedListener(
                 AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
                 val isExpanded = (-1 * verticalOffset <= (appBarLayout.totalScrollRange) / 1.5)
@@ -75,6 +96,10 @@ class HouseInfoFragment : BaseFragment<HouseInfoViewModel, FragmentHouseInfoBind
                 )
             }
         )
+    }
+
+    private fun closeThePage() {
+        findNavController().popBackStack()
     }
 
     private fun setObserver() {
