@@ -6,6 +6,9 @@
     <string name="dialog_error_server_busy">伺服器忙碌中，請稍後再試(%s)</string>
     <string name="dialog_wait">請稍後&#8230;</string>
 
+    <string name="open_web_page"><u> 在網頁開啟 </u></string>
+    <string name="plant_info">植物資料</string>
+
     <string name="taipei_zoom">臺北市立動物園</string>
     <string name="taipei_zoom_none_close_date">無休館資訊</string>
 </resources>
