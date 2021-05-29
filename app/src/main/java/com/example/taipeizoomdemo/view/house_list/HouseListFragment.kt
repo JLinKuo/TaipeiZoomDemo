@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.taipeizoomdemo.R
 import com.example.taipeizoomdemo.databinding.FragmentHouseListBinding
 import com.example.taipeizoomdemo.model.network.Resource
 import com.example.taipeizoomdemo.model.network.bean.HouseBean
@@ -46,7 +47,16 @@ class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBind
     }
 
     private fun setView() {
+        setToggle()
         setRecyclerView()
+    }
+
+    private fun setToggle() {
+        activity.setSupportActionBar(binding.toolbarLayout)
+        val toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.toolbarLayout,
+            R.string.drawer_open, R.string.drawer_close)
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     private fun setRecyclerView() {
