@@ -22,7 +22,7 @@ import com.example.taipeizoomdemo.view.pojo.HousePojo
 /**
  * A simple [Fragment] subclass.
  */
-class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBinding, HouseListRepository>() {
+class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBinding>() {
 
     private val listAdapter by lazy { HouseListItemAdapter( object: HouseListItemAdapter.SelectItemListener {
         override fun onItemSelected(housePojo: HousePojo) {
@@ -129,6 +129,4 @@ class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBind
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentHouseListBinding = FragmentHouseListBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository() = HouseListRepository()
 }

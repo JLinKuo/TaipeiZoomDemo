@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.example.taipeizoomdemo.R
-import com.example.taipeizoomdemo.model.repository.MainRepository
 import com.example.taipeizoomdemo.view.base.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by lazy { ViewModelFactory(MainRepository()) }
+    private val viewModel by lazy { ViewModelFactory() }
 
     private var oneButtonNoTitleDialog: Dialog? = null
 

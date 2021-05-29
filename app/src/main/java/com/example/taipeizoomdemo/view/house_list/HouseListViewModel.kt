@@ -9,7 +9,9 @@ import com.example.taipeizoomdemo.model.repository.HouseListRepository
 import com.example.taipeizoomdemo.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class HouseListViewModel(private val repository: HouseListRepository): BaseViewModel(repository) {
+class HouseListViewModel: BaseViewModel() {
+    private val repository by lazy { HouseListRepository() }
+
     private val _getZoomHouseListResponse = MutableLiveData<Resource<HouseListResponse>>()
     val getZoomHouseListResponse: LiveData<Resource<HouseListResponse>>
         get() = _getZoomHouseListResponse

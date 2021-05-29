@@ -19,7 +19,6 @@ import com.example.taipeizoomdemo.R
 import com.example.taipeizoomdemo.databinding.FragmentHouseInfoBinding
 import com.example.taipeizoomdemo.model.network.Resource
 import com.example.taipeizoomdemo.model.network.bean.PlantBean
-import com.example.taipeizoomdemo.model.repository.HouseInfoRepository
 import com.example.taipeizoomdemo.view.base.BaseFragment
 import com.example.taipeizoomdemo.view.base.handleApiError
 import com.example.taipeizoomdemo.view.pojo.PlantPojo
@@ -29,7 +28,7 @@ import com.google.android.material.appbar.AppBarLayout
  * A simple [Fragment] subclass.
  */
 class HouseInfoFragment :
-        BaseFragment<HouseInfoViewModel, FragmentHouseInfoBinding, HouseInfoRepository>(),
+        BaseFragment<HouseInfoViewModel, FragmentHouseInfoBinding>(),
         HouseInfoListAdapter.ItemClickListener
 {
 
@@ -152,6 +151,4 @@ class HouseInfoFragment :
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentHouseInfoBinding = FragmentHouseInfoBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository() = HouseInfoRepository()
 }

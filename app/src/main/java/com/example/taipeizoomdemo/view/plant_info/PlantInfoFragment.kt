@@ -10,13 +10,12 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.taipeizoomdemo.R
 import com.example.taipeizoomdemo.databinding.FragmentPlantInfoBinding
-import com.example.taipeizoomdemo.model.repository.PlantInfoRepository
 import com.example.taipeizoomdemo.view.base.BaseFragment
 
 /**
  * A simple [Fragment] subclass.
  */
-class PlantInfoFragment : BaseFragment<PlantInfoViewModel, FragmentPlantInfoBinding, PlantInfoRepository>() {
+class PlantInfoFragment : BaseFragment<PlantInfoViewModel, FragmentPlantInfoBinding>() {
 
     private val args: PlantInfoFragmentArgs by navArgs()
     private val plantPojo by lazy { args.plantPojo }
@@ -58,6 +57,4 @@ class PlantInfoFragment : BaseFragment<PlantInfoViewModel, FragmentPlantInfoBind
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentPlantInfoBinding = FragmentPlantInfoBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository() = PlantInfoRepository()
 }
