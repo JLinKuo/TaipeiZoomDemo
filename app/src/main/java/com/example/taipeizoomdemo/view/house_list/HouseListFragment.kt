@@ -52,7 +52,6 @@ class HouseListFragment : BaseFragment<HouseListViewModel, FragmentHouseListBind
     }
 
     private fun setToggle() {
-        activity.setSupportActionBar(binding.toolbarLayout)
         val toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.toolbarLayout,
             R.string.drawer_open, R.string.drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
